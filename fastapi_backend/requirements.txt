@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+diffusers
+transformers
+torch
+peft
+pillow
+huggingface_hub
+gunicorn
