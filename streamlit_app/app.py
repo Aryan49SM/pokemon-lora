@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import base64
 
 st.title("Pokémon Image Generator")
 prompt = st.text_input("Enter a prompt for the Pokémon image", "A cartoon drawing of a blue Pokemon with wings and a fiery tail")
@@ -16,16 +17,21 @@ if st.button("Generate Image"):
             )
             response.raise_for_status()
             image_data = response.json()["image"]
-            image = st.image(
+            
+            # Display the image
+            st.image(
                 f"data:image/png;base64,{image_data}",
                 caption=prompt,
-                use_column_width=True
+                use_container_width=True
             )
 
-            # Download button
+            # Convert base64 string back to binary data for download
+            image_binary = base64.b64decode(image_data)
+            
+            # Download button with binary data
             st.download_button(
                 label="Download Image",
-                data=image_data,
+                data=image_binary,
                 file_name="generated_pokemon.png",
                 mime="image/png"
             )
